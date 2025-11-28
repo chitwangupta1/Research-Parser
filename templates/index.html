@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agentic Research Paper Summarizer (CrewAI)</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            padding: 20px; 
+            background: #f2f2f2; 
+        }
+        .box {
+            width: 70%; 
+            margin: auto; 
+            background: white;
+            padding: 25px; 
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+        }
+        textarea { 
+            width: 100%; 
+            height: 180px; 
+            padding: 10px; 
+        }
+        h2, h3 { color: #333; }
+        .section {
+            background: #fafafa;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #444;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <h2>📄 CrewAI – Research Paper Summarizer</h2>
+    <p>Upload a research paper PDF. AI agents will extract text, summarize content, extract keywords, and generate citations.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" accept="application/pdf" required>
+        <br><br>
+        <button type="submit">Analyze PDF</button>
+    </form>
+
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if summary %}
+    <br><h3>📌 Analysis Result</h3>
+
+    <div class="section">
+        <label>📝 Summary</label>
+        <textarea readonly>{{ summary }}</textarea>
+    </div>
+
+    <div class="section">
+        <label>🔑 Keywords Extracted</label>
+        <textarea readonly>{{ keywords }}</textarea>
+    </div>
+
+    <div class="section">
+        <label>📚 References Found</label>
+        <textarea readonly>{{ references }}</textarea>
+    </div>
+
+    <div class="section">
+        <label>🔖 Generated Citations (APA / MLA / IEEE)</label>
+        <textarea readonly>{{ citations }}</textarea>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
