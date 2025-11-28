@@ -5,11 +5,11 @@ import google.generativeai as genai
 
 load_dotenv()
 
-genai.configure(api_key="AIzaSyD2-YvNVkV80VDjQ4aBLcnU4_INaBPhdN8")
+genai.configure(api_key="GAK")
 
 llm = LLM(
     model="gemini/gemini-2.0-flash",
-    api_key="AIzaSyD2-YvNVkV80VDjQ4aBLcnU4_INaBPhdN8"
+    api_key="GAK"
 )
 
 
@@ -96,3 +96,4 @@ def build_research_crew(text):
     )
 
     return crew
+
