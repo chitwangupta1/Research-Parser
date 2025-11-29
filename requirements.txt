@@ -19,6 +19,7 @@ PyPDF2
 python-dotenv
 
 # CrewAI
+crewai[google-genai]
 crewai
 crewai-tools
 
@@ -28,3 +29,4 @@ google-generativeai
 # Required dependencies
 pydantic
 httpx
+
