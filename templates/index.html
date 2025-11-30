@@ -1,90 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agentic Research Paper Summarizer (CrewAI)</title>
     <style>
-        body { 
-            font-family: Arial; 
-            padding: 20px; 
-            background: #f2f2f2; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
         }
-        .box {
-            width: 70%; 
-            margin: auto; 
-            background: white;
-            padding: 25px; 
-            border-radius: 10px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.2);
-        }
-        textarea { 
-            width: 100%; 
-            height: 180px; 
-            padding: 10px; 
-        }
-        h2, h3 { color: #333; }
-        .section {
-            background: #fafafa;
-            padding: 15px;
-            border-left: 4px solid #007bff;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            color: #444;
-        }
-        button {
-            padding: 10px 15px;
-            background: #007bff;
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: #0d6efd;
             color: white;
-            border: none;
-            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            width: 100%;
+            border: 2px dashed #0d6efd;
+            border-radius: 10px;
+            background: #f1faff;
             cursor: pointer;
         }
-        button:hover {
-            background: #0056b3;
+
+        button {
+            margin-top: 20px;
+            padding: 12px 18px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
         }
+
+        button:hover {
+            background: #084298;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #333;
+            border-left: 5px solid #0d6efd;
+            padding-left: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            background: #f9fcff;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+        }
+
+        .card {
+            background: #fdfdfd;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #0d6efd;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .applications {
+            margin-top: 40px;
+            background: #e7f1ff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .applications h3 {
+            margin-bottom: 15px;
+        }
+
+        .applications ul {
+            line-height: 1.8;
+            font-size: 1rem;
+            padding-left: 25px;
+        }
+
     </style>
 </head>
 
 <body>
-<div class="box">
-    <h2>📄 CrewAI – Research Paper Summarizer</h2>
-    <p>Upload a research paper PDF. AI agents will extract text, summarize content, extract keywords, and generate citations.</p>
-
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="pdf_file" accept="application/pdf" required>
-        <br><br>
-        <button type="submit">Analyze PDF</button>
-    </form>
-
-    {% if error %}
-    <p style="color:red;">{{ error }}</p>
-    {% endif %}
-
-    {% if summary %}
-    <br><h3>📌 Analysis Result</h3>
-
-    <div class="section">
-        <label>📝 Summary</label>
-        <textarea readonly>{{ summary }}</textarea>
+    <div class="header">
+        <h1>📄 CrewAI – Research Paper Summarizer</h1>
+        <p>AI-powered multi-agent system that summarizes, extracts keywords, and generates citations.</p>
     </div>
 
-    <div class="section">
-        <label>🔑 Keywords Extracted</label>
-        <textarea readonly>{{ keywords }}</textarea>
-    </div>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            <label><strong>Upload your PDF research paper</strong></label><br><br>
+            <input type="file" name="pdf_file" accept="application/pdf" required />
+            <button type="submit">Analyze PDF</button>
+        </form>
 
-    <div class="section">
-        <label>📚 References Found</label>
-        <textarea readonly>{{ references }}</textarea>
-    </div>
+        {% if error %}
+        <p style="color:red;font-weight:600;">{{ error }}</p>
+        {% endif %}
 
-    <div class="section">
-        <label>🔖 Generated Citations (APA / MLA / IEEE)</label>
-        <textarea readonly>{{ citations }}</textarea>
+        {% if summary %}
+        <h2>📌 Analysis Result</h2>
+
+        <div class="card">
+            <h3>📝 Summary</h3>
+            <textarea readonly>{{ summary }}</textarea>
+        </div>
+
+        <div class="card">
+            <h3>🔑 Extracted Keywords</h3>
+            <textarea readonly>{{ keywords }}</textarea>
+        </div>
+
+        <div class="card">
+            <h3>📚 References Detected</h3>
+            <textarea readonly>{{ references }}</textarea>
+        </div>
+
+        <div class="card">
+            <h3>🔖 Generated Citations (APA / MLA / IEEE)</h3>
+            <textarea readonly>{{ citations }}</textarea>
+        </div>
+        {% endif %}
+
+        <div class="applications">
+            <h3>🌟 Applications & Benefits of This Tool</h3>
+            <ul>
+                <li>Helps students quickly understand long research papers.</li>
+                <li>Assists researchers in extracting key insights instantly.</li>
+                <li>Generates ready-to-use citations in APA, MLA, and IEEE formats.</li>
+                <li>Useful for literature reviews and academic writing.</li>
+                <li>Ideal for AI agents automating scientific workflows.</li>
+                <li>Saves hours of manual reading and summarizing.</li>
+                <li>Useful for professors preparing notes or presentations.</li>
+            </ul>
+        </div>
+
     </div>
-    {% endif %}
-</div>
 </body>
 </html>
